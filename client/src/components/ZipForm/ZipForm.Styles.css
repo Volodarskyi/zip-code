@@ -1,0 +1,8 @@
+.zip-form {
+  display: flex;
+  flex-direction: column;
+  background: #f3f3f3;
+  margin-top: 8rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
