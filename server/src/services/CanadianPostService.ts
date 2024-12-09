@@ -1,31 +1,45 @@
-const getAddressByZip = async (zipCode: string) => {
+import axios from 'axios';
+
+const getAddressByZip = async (
+  zipCode: string,
+  otherParams: Record<string, string>,
+) => {
   const canadianApiKey = process.env.CANADIAN_API_KEY;
-  const reqUrl = 'https://www.canadapost-postescanada.ca/ac/support/api/';
+  const requestUrl =
+    'http://ws1.postescanada-canadapost.ca/AddressComplete/Interactive/Find/v2.10/json3.ws';
 
-  const reqHeaders = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${canadianApiKey}`,
-  };
-
-  const reqBody = JSON.stringify({
-    zipCode: 'V3H 0MM',
-  });
+  // Construct the query parameters
+  const params = new URLSearchParams({
+    Key: canadianApiKey || '',
+    SearchTerm: zipCode,
+    ...otherParams,
+  }).toString();
 
   try {
-    const response = await fetch(reqUrl, {
-      method: 'POST',
-      headers: reqHeaders,
-      body: reqBody,
+    const response = await axios.post(requestUrl, params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
 
-    if (response.ok) {
-      return await response.json();
+    const responseData = response.data;
+
+    if (
+      responseData.Items.length === 1 &&
+      typeof responseData.Items[0].Error !== 'undefined'
+    ) {
+      throw new Error(responseData.Items[0].Description);
     }
 
-    throw new Error(`API request failed with status ${response.status}`);
+    if (responseData.Items.length === 0) {
+      throw new Error('Sorry, there were no results.');
+    }
+
+    // Process and return the results as needed
+    return responseData.Items;
   } catch (error) {
-    console.log('error', error);
-    return `Error occurred. ${error?.toString()}`;
+    console.error('Error occurred:', error);
+    return `Error occurred: ${error?.toString()}`;
   }
 };
 

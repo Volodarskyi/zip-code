@@ -8,8 +8,10 @@ async function getAddressByZip(
   try {
     const { body } = req;
     const { zipCode } = body;
+    console.log('CONTROLLER zip code:', zipCode);
 
     if (!zipCode) {
+      console.log('Controller.Bad Request. Check zip code', zipCode);
       throw new Error(`Bad Request. Check zip code`);
     }
     const address = await canadianPostService.getAddressByZip(zipCode);
