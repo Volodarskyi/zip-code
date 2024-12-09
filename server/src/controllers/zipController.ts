@@ -17,8 +17,6 @@ async function getAddressByZip(
     const { body } = req;
     const { zipCode } = body;
 
-    console.log('CONTROLLER zip code:', zipCode);
-
     if (!zipCode) {
       throw new AppError('Bad Request: Missing zip code', 400);
     }

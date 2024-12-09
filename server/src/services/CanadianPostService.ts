@@ -12,7 +12,7 @@ const getAddressByZip = async (
   // Construct the query parameters
   const params = new URLSearchParams({
     Key: canadianApiKey || '',
-    SearchTerm: 'testerror',
+    SearchTerm: zipCode,
     ...otherParams,
   }).toString();
 
