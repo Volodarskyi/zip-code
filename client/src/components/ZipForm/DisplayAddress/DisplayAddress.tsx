@@ -3,15 +3,22 @@ import { FC } from 'react';
 import { Input } from 'antd';
 
 interface IDisplayAddressProps {
-  address: string | undefined;
+  addressText: string | undefined;
+  addressDescription: string | undefined;
 }
 
-const DisplayAddress: FC<IDisplayAddressProps> = ({ address }) => {
+const DisplayAddress: FC<IDisplayAddressProps> = ({
+  addressText,
+  addressDescription,
+}) => {
   return (
     <div>
-      <Input className="mt-05" addonBefore="City" value={address} />
-      <Input className="mt-05" addonBefore="Province" value={address} />
-      <Input className="mt-05" addonBefore="Address" value={address} />
+      <Input className="mt-05" addonBefore="Address" value={addressText} />
+      <Input
+        className="mt-05"
+        addonBefore="Description"
+        value={addressDescription}
+      />
     </div>
   );
 };

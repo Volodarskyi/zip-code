@@ -18,17 +18,15 @@ const postalCodeRegex = /^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/;
 
 const ZipInput: FC<IZipInputProps> = ({ getAddressReq }) => {
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-
-    console.log('send req');
-
-    getAddressReq(values.zipCode!);
+    if (values.zipCode) {
+      getAddressReq(values.zipCode);
+    }
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
     errorInfo,
   ) => {
-    console.log('Failed:', errorInfo);
+    console.error('Failed:', errorInfo);
   };
 
   return (

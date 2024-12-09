@@ -1,4 +1,4 @@
-import ZipForm from '@/components/ZipForm/ZipForm';
+import { ZipForm } from '@/components/ZipForm/ZipForm';
 
 import styles from './page.module.css';
 
