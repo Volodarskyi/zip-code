@@ -8,10 +8,6 @@ import ZipInput from '@/components/ZipForm/ZipInput/ZipInput';
 
 import './ZipForm.Styles.css';
 
-// interface IZipFormProps {
-//
-// }
-
 export const ZipForm: FC = () => {
   const [addressText, setAddressText] = useState('');
   const [addressDescription, setAddressDescription] = useState('');
