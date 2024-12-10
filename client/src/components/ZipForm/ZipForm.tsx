@@ -22,8 +22,8 @@ export const ZipForm: FC = () => {
 
       setAddressDescription(resItem.Description);
       setAddressText(resItem.Text);
-    } catch (e) {
-      console.error(e?.toString());
+    } catch (error) {
+      console.error(error?.toString());
     }
   };
 
