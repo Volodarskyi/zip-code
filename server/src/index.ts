@@ -6,15 +6,18 @@ import rateLimit from 'express-rate-limit';
 
 import routes from './routes';
 import { AppError, errorHandler } from './utils/errorHandler';
+import { connect } from 'mongoose';
 
 const cors = require('cors');
 
 const app = express();
 dotenv.config();
 
-app.use(cors({ origin: '*' }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// TODO For production, this should be restricted to trusted domains.
+app.use(cors({ origin: '*' })); //Allows requests from any origin
+
+app.use(bodyParser.urlencoded({ extended: false })); //Parses incoming requests with URL-encoded payloads
+app.use(bodyParser.json()); //Parses incoming JSON request bodies
 
 // Security
 app.use(helmet());
@@ -42,6 +45,10 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 async function start() {
+  if (typeof process.env.MONGO_URI === 'string') {
+    await connect(process.env.MONGO_URI);
+  }
+
   app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server is running on port: ${process.env.SERVER_PORT}`);
   });
